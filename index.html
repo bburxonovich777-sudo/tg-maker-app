@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mini Maker</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 16px;
+      background: var(--tg-theme-bg-color, #ffffff);
+      color: var(--tg-theme-text-color, #000000);
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+    button {
+      background: var(--tg-theme-button-color, #2481cc);
+      color: var(--tg-theme-button-text-color, #ffffff);
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h3>Loyiha / Shablon Yaratish</h3>
+
+  <label>Nomi:</label>
+  <input id="title" type="text" placeholder="Masalan: Xazora Shop" />
+
+  <label>Turi:</label>
+  <select id="kind">
+    <option value="shop">Do‘kon bot</option>
+    <option value="channel">Kanal boshqaruv</option>
+    <option value="quiz">Test / Viktorina</option>
+  </select>
+
+  <button id="createBtn">Botga yuborish</button>
+
+  <script>
+    const tg = window.Telegram.WebApp;
+    tg.expand(); // Oynani to'liq ochish
+
+    document.getElementById("createBtn").addEventListener("click", () => {
+      const title = document.getElementById("title").value.trim();
+      const kind = document.getElementById("kind").value;
+
+      if (!title) {
+        tg.showAlert("Iltimos, nom kiriting!");
+        return;
+      }
+
+      // Ma'lumotni JSON ko'rinishida botga jo'natish
+      const payload = JSON.stringify({ title, kind });
+      tg.sendData(payload);
+    });
+  </script>
+</body>
+</html>
